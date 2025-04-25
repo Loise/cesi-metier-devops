@@ -1,0 +1,83 @@
+terraform {
+  required_providers {
+    docker = {
+      source  = "kreuzwerker/docker"
+      version = "3.0.2"
+    }
+  }
+}
+
+# Configure the docker provider
+provider "docker" {
+}
+
+resource "docker_network" "internal_network" {
+  name = "internal-app-network-py-mysql"
+}
+
+variable "mysql_root_password" {
+  type        = string
+  description = "mysql root password"
+}
+
+variable "mysql_database" {
+  type        = string
+  description = "mysql database"
+}
+
+variable "mysql_user" {
+  type        = string
+  description = "mysql user"
+}
+
+resource "docker_image" "mysql" {
+  name         = "mysql:9.2"
+}
+
+resource "docker_container" "mysql" {
+  name = "mysql"
+  image = "${docker_image.mysql.image_id}"
+  networks_advanced {
+    name = docker_network.internal_network.name
+  }
+  volumes {
+    host_path = "/Users/loisefenoll/Documents/m2-web-docker-connect/sqlfiles/"
+    container_path = "/docker-entrypoint-initdb.d/"
+  }
+  env = ["MYSQL_ROOT_PASSWORD=${var.mysql_root_password}"]
+  ports {
+    internal = 3306
+    external = 3306
+  }
+  healthcheck {
+    test = ["mysqladmin" ,"ping", "-h", "localhost"]
+  }
+}
+
+resource "docker_image" "python-api" {
+  name         = "python-api"
+  keep_locally = true
+  build {
+    context= "./server"
+  }
+}
+
+resource "docker_container" "python-api" {
+  name    = "python-api"
+  image   = docker_image.python-api.image_id
+  ports {
+    external = 8000
+    internal = 8000
+  }
+  networks_advanced {
+    name = docker_network.internal_network.name
+  }
+  env = [
+    "MYSQL_ROOT_PASSWORD=${var.mysql_root_password}",
+    "MYSQL_DATABASE=${var.mysql_database}",
+    "MYSQL_USER=${var.mysql_user}",
+    "MYSQL_PORT=3306",
+    "MYSQL_HOST=${docker_container.mysql.network_data.0.ip_address}"
+  ]
+  depends_on = [docker_container.mysql]
+}
