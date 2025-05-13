@@ -18,8 +18,8 @@ provider "scalingo" {
   region    = "osc-fr1"
 }
 
-resource "scalingo_app" "python-api" {
-  name     = "python-api"
+resource "scalingo_app" "loisefenoll-python-api" {
+  name     = "loisefenoll-python-api"
   environment = {
     PROJECT_DIR="server",
     BUILDPACK_URL = "https://github.com/Scalingo/python-buildpack"
@@ -29,13 +29,21 @@ resource "scalingo_app" "python-api" {
 resource "scalingo_addon" "db" {
   provider_id = "mysql"
   plan = "mysql-starter-512"
-  app = "${scalingo_app.python-api.id}"
+  app = "${scalingo_app.loisefenoll-python-api.id}"
 }
 
 resource "scalingo_container_type" "web" {
-  app    = scalingo_app.python-api.name
+  app    = scalingo_app.loisefenoll-python-api.name
   name   = "web"
   amount = 1
   size   = "S"
 }
+
+resource "scalingo_container_type" "api" {
+  app    = scalingo_app.loisefenoll-python-api.name
+  name   = "api"
+  amount = 1
+  size   = "S"
+}
+
 
