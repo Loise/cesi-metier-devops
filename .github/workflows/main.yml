@@ -1,4 +1,4 @@
-hname: first pipeline
+name: first pipeline
 on:
   push:
     branches: [main]
