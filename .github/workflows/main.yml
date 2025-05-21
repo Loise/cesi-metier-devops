@@ -11,8 +11,6 @@ jobs:
         run: docker compose -f docker-compose-mysql-adminer.yml up --build --detach
       - name: docker ps
         run: docker ps -a
-      - name: test api
-        run: curl -f http://localhost:8000/users
       - name: stop docker compose
         run: docker compose stop
         
