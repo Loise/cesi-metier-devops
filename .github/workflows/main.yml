@@ -1,0 +1,16 @@
+name: first pipeline
+on:
+  push:
+    branches: [main]
+jobs:
+  docker_archi:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: run docker compose
+        run: docker compose up --build
+      - name: test api
+        run: curl -f http://localhost:8000/users
+      - name: stop docker compose
+        run: docker compose stop
+        
