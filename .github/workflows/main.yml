@@ -1,0 +1,18 @@
+name: first pipeline
+on:
+  push:
+    branches: [main]
+jobs:
+  docker_archi:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: run docker compose
+        run: docker compose -f docker-compose-mysql-adminer.yml up --build --detach
+      - name: docker ps
+        run: docker ps -a
+      - name: test api
+        run: curl -f http://localhost:8000/users
+      - name: stop docker compose
+        run: docker compose stop
+        
