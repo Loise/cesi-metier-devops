@@ -8,7 +8,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: run docker compose
-        run: docker compose up --build --detach
+        run: docker compose -f docker-compose-mysql-adminer.yml up --build --detach
       - name: docker ps
         run: docker ps -a
       - name: test api
