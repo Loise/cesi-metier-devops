@@ -1,4 +1,4 @@
-name: first pipeline
+hname: first pipeline
 on:
   push:
     branches: [main]
@@ -8,7 +8,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: run docker compose
-        run: docker compose up --build
+        run: docker compose up --build --detach
+      - name: docker ps
+        run: docker ps -a
       - name: test api
         run: curl -f http://localhost:8000/users
       - name: stop docker compose
