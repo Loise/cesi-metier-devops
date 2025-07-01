@@ -1,7 +1,7 @@
 USE ynov;
 CREATE TABLE users (
-	id INT PRIMARY KEY NOT NULL,
-	name VARCHAR(100),
-	lastname VARCHAR(100),
-	email VARCHAR(255)
+	id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+	name VARCHAR(50),
+	lastname VARCHAR(50),
+	email VARCHAR(100)
 );

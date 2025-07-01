@@ -1,2 +1,2 @@
 web: python ./server/app.py
-api: cd api && npm start
+api: node ./api/server.js

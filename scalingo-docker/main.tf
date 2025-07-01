@@ -18,8 +18,8 @@ provider "scalingo" {
   region    = "osc-fr1"
 }
 
-resource "scalingo_app" "loisefenoll-python-api" {
-  name     = "loisefenoll-python-api"
+resource "scalingo_app" "loisefenoll-test-01" {
+  name     = "loisefenoll-test-01"
 }
 
 resource "scalingo_addon" "db" {
@@ -29,17 +29,22 @@ resource "scalingo_addon" "db" {
 }
 
 resource "scalingo_container_type" "web" {
-  app    = scalingo_app.loisefenoll-python-api.name
+  app_id = scalingo_app.my_docker_app_python.id
   name   = "web"
-  amount = 1
   size   = "S"
+  amount = 1
 }
 
-resource "scalingo_container_type" "api" {
-  app    = scalingo_app.loisefenoll-python-api.name
-  name   = "api"
-  amount = 1
+resource "scalingo_container_type" "api-python" {
+  app_id = scalingo_app.my_docker_app_python.id
+  name   = "api-python"
   size   = "S"
+  amount = 1
 }
 
-
+resource "scalingo_container_type" "api-node" {
+  app_id = scalingo_app.my_docker_app_python.id
+  name   = "api-node"
+  size   = "S"
+  amount = 1
+}
