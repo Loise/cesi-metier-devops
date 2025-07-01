@@ -53,7 +53,7 @@ jobs:
           cp -r front/server/ monoapp/back-python
           cp -r back-node monoapp/
           cp scalingo-docker/Procfile monoapp/
-          tar -czf monoapp.tar.gz -C monoapp .
+          tar -czvf monoapp.tar.gz --exclude='.git' .
           ls -la
       
       - name: Install Scalingo CLI
