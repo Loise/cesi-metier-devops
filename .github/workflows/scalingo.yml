@@ -53,7 +53,9 @@ jobs:
           cp -r back-node monoapp/
           cp scalingo-docker/Procfile monoapp/
           tar -czf monoapp.tar.gz -C monoapp .
-
+      - uses: scalingo-community/setup-scalingo@v0.1.1
+        with:
+          region: 'osc-fr1'
       - name: Déploiement sur Scalingo
         run: scalingo --app loisefenoll-test-01 deploy monoapp.tar.gz
         env:
