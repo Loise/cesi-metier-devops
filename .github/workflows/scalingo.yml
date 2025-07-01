@@ -31,7 +31,9 @@ jobs:
     runs-on: ubuntu-latest
     # needs: terraform_apply # Dépend que l'infra Terraform soit à jour
     steps:
-        # Si votre code est dans un sous-dossier, spécifiez path: ./services/web-api
+
+      - name: Checkout code
+        uses: actions/checkout@v4
       - name: Checkout Front
         uses: actions/checkout@v4
         with:
