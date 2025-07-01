@@ -1,2 +1,6 @@
 
 terraform.tfvars
+scalingo-docker/.terraform
+.terraform/
+.terraform.lock.hcl
+terraform.tfstate

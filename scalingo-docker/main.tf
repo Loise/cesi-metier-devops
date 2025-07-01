@@ -25,25 +25,25 @@ resource "scalingo_app" "loisefenoll-test-01" {
 resource "scalingo_addon" "db" {
   provider_id = "mysql"
   plan = "mysql-starter-512"
-  app = "${scalingo_app.loisefenoll-python-api.id}"
+  app = "${scalingo_app.loisefenoll-test-01.id}"
 }
 
 resource "scalingo_container_type" "web" {
-  app_id = scalingo_app.my_docker_app_python.id
+  app = scalingo_app.loisefenoll-test-01.name
   name   = "web"
   size   = "S"
   amount = 1
 }
 
 resource "scalingo_container_type" "api-python" {
-  app_id = scalingo_app.my_docker_app_python.id
+  app = scalingo_app.loisefenoll-test-01.name
   name   = "api-python"
   size   = "S"
   amount = 1
 }
 
 resource "scalingo_container_type" "api-node" {
-  app_id = scalingo_app.my_docker_app_python.id
+  app = scalingo_app.loisefenoll-test-01.name
   name   = "api-node"
   size   = "S"
   amount = 1
