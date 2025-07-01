@@ -35,13 +35,13 @@ jobs:
       - name: Checkout Front
         uses: actions/checkout@v4
         with:
-          repository: https://github.com/Loise/ci-cd-ynov
+          repository: Loise/ci-cd-ynov
           path: front
       - name: Checkout Back node
         uses: actions/checkout@v4
         with:
-          repository: https://github.com/Loise/ci-cd-back-ynov
-          path: back-python
+          repository: Loise/ci-cd-back-ynov
+          path: back-node
           
       - name: Créer l'archive
         run: |
