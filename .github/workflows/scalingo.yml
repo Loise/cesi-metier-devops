@@ -51,7 +51,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: Loise/ci-cd-back-ynov
-          path: back-node
+          path: api-node
       
       # - name: Install dependencies
       #   run: |
@@ -67,8 +67,8 @@ jobs:
           sudo chown -R $USER:$USER $GITHUB_WORKSPACE
           mkdir -p monoapp
           cp -r front monoapp/
-          cp -r front/server/ monoapp/back-python
-          cp -r back-node monoapp/
+          cp -r server monoapp/api-python
+          cp -r api-node monoapp/
           cp scalingo-docker/Procfile monoapp/Procfile
           tar -czvf monoapp.tar.gz --exclude='.git' -C monoapp .
           ls -la
