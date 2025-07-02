@@ -70,6 +70,7 @@ jobs:
           cp -r server monoapp/api-python
           cp -r api-node monoapp/
           cp scalingo-docker/Procfile monoapp/Procfile
+          cp scalingo-docker/.buildpacks monoapp/.buildpacks
           tar -czvf monoapp.tar.gz --exclude='.git' -C monoapp .
           ls -la
 
